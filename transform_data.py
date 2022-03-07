@@ -3,11 +3,13 @@
 - None, 1のみのカテゴリを0, 1に変換する(カラムは上書きされる)
 - 1, 2のみのカテゴリを0, 1に変換する(カラムは上書きされる)
 """
+import shutil
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 from logzero import logger
+from tqdm import tqdm
 
 import schema
 
@@ -41,13 +43,13 @@ sample_submission = pd.read_csv(
 logger.info("start processing customer_id")
 customer_ids = sorted(customers.customer_id.unique())
 mp_customer_id = {x: i for i, x in enumerate(customer_ids)}
-_dict_to_dataframe(mp_customer_id).to_csv(OUTPUT_DIR / 'mp_customer_id.csv', index=False)
+_dict_to_dataframe(mp_customer_id).to_pickle(OUTPUT_DIR / 'mp_customer_id.pkl')
 
 # article_id
 logger.info("start processing article_id")
 article_ids = sorted(articles.article_id.unique())
 mp_article_id = {x: i for i, x in enumerate(article_ids)}
-_dict_to_dataframe(mp_customer_id).to_csv(OUTPUT_DIR / 'mp_article_id.csv', index=False)
+_dict_to_dataframe(mp_article_id).to_pickle(OUTPUT_DIR / 'mp_article_id.pkl')
 
 ################
 # customers
@@ -68,7 +70,7 @@ count_encoding_columns = [
 for col_name in count_encoding_columns:
     mp = _count_encoding_dict(customers, col_name)
     _add_idx_column(customers, col_name, mp)
-customers.to_csv(OUTPUT_DIR / 'customers.csv', index=False)
+customers.to_pickle(OUTPUT_DIR / 'customers.pkl')
 
 ################
 # articles
@@ -91,7 +93,7 @@ count_encoding_columns = [
 for col_name in count_encoding_columns:
     mp = _count_encoding_dict(articles, col_name)
     _add_idx_column(articles, col_name, mp)
-articles.to_csv(OUTPUT_DIR / 'articles.csv', index=False)
+articles.to_pickle(OUTPUT_DIR / 'articles.pkl')
 
 ################
 # transactions
@@ -101,11 +103,27 @@ _add_idx_column(transactions, 'customer_id', mp_customer_id)
 _add_idx_column(transactions, 'article_id', mp_article_id)
 # (1, 2) -> (0, 1)
 transactions['sales_channel_id'] = transactions['sales_channel_id'] - 1
-transactions.to_csv(OUTPUT_DIR / 'transactions_train.csv', index=False)
+transactions.to_pickle(OUTPUT_DIR / 'transactions_train.pkl')
 
 ################
 # sample_submission
 ################
 logger.info("start processing sample_submission")
 _add_idx_column(sample_submission, 'customer_id', mp_customer_id)
-sample_submission.to_csv(OUTPUT_DIR / 'sample_submission.csv', index=False)
+sample_submission.to_pickle(OUTPUT_DIR / 'sample_submission.pkl')
+
+
+################
+# images
+################
+INPUT_DIR = Path('./input/h-and-m-personalized-fashion-recommendations/images')
+OUTPUT_DIR = Path('./input/transformed/images')
+mp = pd.read_pickle('./input/transformed/mp_article_id.pkl')
+dct = dict(zip(mp.val, mp.idx))
+
+paths = list(INPUT_DIR.glob("*/*.jpg"))
+for path in tqdm(paths):
+    name = path.name[:-4]
+    idx = dct[name]
+    path_to = OUTPUT_DIR / f'{idx}.jpg'
+    shutil.copyfile(path, path_to)
