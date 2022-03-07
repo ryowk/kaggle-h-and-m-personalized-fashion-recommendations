@@ -28,3 +28,10 @@ def extract_transactions_train(transactions: pd.DataFrame, valid_start_date: dat
     df = transactions[(start_date <= transactions.t_dat) & (transactions.t_dat < end_date)].reset_index(drop=True)
     logger.info(f"# of records: {len(df)}")
     return df
+
+
+def train_valid_split(transactions: pd.DataFrame, valid_start_date: datetime.date,
+                      train_days: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    transactions_train = extract_transactions_train(transactions, valid_start_date, train_days)
+    transactions_valid = extract_transactions_valid(transactions, valid_start_date)
+    return transactions_train, transactions_valid

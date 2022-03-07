@@ -26,20 +26,20 @@ ARTICLES_ORIGINAL = {
     'detail_desc': 'object',
 }
 
-ARTICLES = {
-    'article_id_idx': 'int64',
-    'product_type_no_idx': 'int64',
-    'product_group_name_idx': 'int64',
-    'graphical_appearance_no_idx': 'int64',
-    'colour_group_code_idx': 'int64',
-    'perceived_colour_value_id_idx': 'int64',
-    'perceived_colour_master_id_idx': 'int64',
-    'department_no_idx': 'int64',
-    'index_code_idx': 'int64',
-    'index_group_no_idx': 'int64',
-    'section_no_idx': 'int64',
-    'garment_group_no_idx': 'int64',
-}
+ARTICLES = [
+    'article_id_idx',
+    'product_type_no_idx',
+    'product_group_name_idx',
+    'graphical_appearance_no_idx',
+    'colour_group_code_idx',
+    'perceived_colour_value_id_idx',
+    'perceived_colour_master_id_idx',
+    'department_no_idx',
+    'index_code_idx',
+    'index_group_no_idx',
+    'section_no_idx',
+    'garment_group_no_idx',
+]
 
 CUSTOMERS_ORIGINAL = {
     'customer_id': 'object',
@@ -51,14 +51,14 @@ CUSTOMERS_ORIGINAL = {
     'postal_code': 'object',
 }
 
-CUSTOMERS = {
-    'customer_id_idx': 'int64',
-    'FN': 'int64',
-    'Active': 'int64',
-    'club_member_status_idx': 'int64',
-    'fashion_news_frequency_idx': 'int64',
-    'age': 'float64',
-}
+CUSTOMERS = [
+    'customer_id_idx',
+    'FN',
+    'Active',
+    'club_member_status_idx',
+    'fashion_news_frequency_idx',
+    'age',
+]
 
 TRANSACTIONS_ORIGINAL = {
     'customer_id': 'object',
@@ -67,19 +67,20 @@ TRANSACTIONS_ORIGINAL = {
     'sales_channel_id': 'int64',
 }
 
-TRANSACTIONS = {
-    'customer_id_idx': 'int64',
-    'article_id_idx': 'int64',
-    'price': 'float64',
-    'sales_channel_id': 'int64',
-}
+TRANSACTIONS = [
+    't_dat',
+    'customer_id_idx',
+    'article_id_idx',
+    'price',
+    'sales_channel_id',
+]
 
 SAMPLE_SUBMISSION_ORIGINAL = {
     'customer_id': 'object',
     'prediction': 'object',
 }
 
-SAMPLE_SUBMISSION = {
-    'customer_id': 'object',
-    'customer_id_idx': 'int64',
-}
+SAMPLE_SUBMISSION = [
+    'customer_id',
+    'customer_id_idx',
+]
