@@ -1,7 +1,9 @@
 import datetime
 
+import matplotlib.pyplot as plt
 import pandas as pd
 from logzero import logger
+from PIL import Image
 
 
 def extract_transactions_valid(transactions: pd.DataFrame, valid_start_date: datetime.date) -> pd.DataFrame:
@@ -35,3 +37,22 @@ def train_valid_split(transactions: pd.DataFrame, valid_start_date: datetime.dat
     transactions_train = extract_transactions_train(transactions, valid_start_date, train_days)
     transactions_valid = extract_transactions_valid(transactions, valid_start_date)
     return transactions_train, transactions_valid
+
+
+def plot_images(idxs: list[int]):
+    paths = [f'./input/transformed/images/{idx}.jpg' for idx in idxs]
+    columns = 12
+    n = len(idxs)
+    rows = (n + columns - 1) // columns
+    plt.figure(figsize=(4 * columns, 4 * rows))
+    for i, path in enumerate(paths):
+        try:
+            img = Image.open(path)
+        except FileNotFoundError:
+            img = Image.open('./input/transformed/images/notfound.png')
+        img = img.resize((256, 256))
+        plt.subplot(rows, columns, i + 1)
+
+        plt.axis('off')
+        plt.imshow(img)
+    plt.show()
