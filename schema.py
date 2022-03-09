@@ -26,8 +26,8 @@ ARTICLES_ORIGINAL = {
     'detail_desc': 'object',
 }
 
-ARTICLES = [
-    'article_id_idx',
+ITEMS = [
+    'item',
     'product_type_no_idx',
     'product_group_name_idx',
     'graphical_appearance_no_idx',
@@ -51,8 +51,8 @@ CUSTOMERS_ORIGINAL = {
     'postal_code': 'object',
 }
 
-CUSTOMERS = [
-    'customer_id_idx',
+USERS = [
+    'user',
     'FN',
     'Active',
     'club_member_status_idx',
@@ -69,8 +69,8 @@ TRANSACTIONS_ORIGINAL = {
 
 TRANSACTIONS = [
     't_dat',
-    'customer_id_idx',
-    'article_id_idx',
+    'user',
+    'item',
     'price',
     'sales_channel_id',
 ]
@@ -82,5 +82,5 @@ SAMPLE_SUBMISSION_ORIGINAL = {
 
 SAMPLE_SUBMISSION = [
     'customer_id',
-    'customer_id_idx',
+    'user',
 ]

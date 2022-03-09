@@ -26,8 +26,8 @@ def _dict_to_dataframe(mp: dict[Any, int]) -> pd.DataFrame:
     return pd.DataFrame(mp.items(), columns=['val', 'idx'])
 
 
-def _add_idx_column(df: pd.DataFrame, col_name, mp: dict[Any, int]):
-    df[col_name + '_idx'] = df[col_name].apply(lambda x: mp[x]).astype('int64')
+def _add_idx_column(df: pd.DataFrame, col_name_from: str, col_name_to: str, mp: dict[Any, int]):
+    df[col_name_to] = df[col_name_from].apply(lambda x: mp[x]).astype('int64')
 
 
 logger.info("start reading dataframes")
@@ -55,7 +55,7 @@ _dict_to_dataframe(mp_article_id).to_pickle(OUTPUT_DIR / 'mp_article_id.pkl')
 # customers
 ################
 logger.info("start processing customers")
-_add_idx_column(customers, 'customer_id', mp_customer_id)
+_add_idx_column(customers, 'customer_id', 'user', mp_customer_id)
 # (None, 1) -> (0, 1)
 customers['FN'] = customers['FN'].fillna(0).astype('int64')
 customers['Active'] = customers['Active'].fillna(0).astype('int64')
@@ -69,14 +69,14 @@ count_encoding_columns = [
 ]
 for col_name in count_encoding_columns:
     mp = _count_encoding_dict(customers, col_name)
-    _add_idx_column(customers, col_name, mp)
-customers.to_pickle(OUTPUT_DIR / 'customers.pkl')
+    _add_idx_column(customers, col_name, f'{col_name}_idx', mp)
+customers.to_pickle(OUTPUT_DIR / 'users.pkl')
 
 ################
 # articles
 ################
 logger.info("start processing articles")
-_add_idx_column(articles, 'article_id', mp_article_id)
+_add_idx_column(articles, 'article_id', 'item', mp_article_id)
 count_encoding_columns = [
     'product_type_no',
     'product_group_name',
@@ -92,15 +92,15 @@ count_encoding_columns = [
 ]
 for col_name in count_encoding_columns:
     mp = _count_encoding_dict(articles, col_name)
-    _add_idx_column(articles, col_name, mp)
-articles.to_pickle(OUTPUT_DIR / 'articles.pkl')
+    _add_idx_column(articles, col_name, f'{col_name}_idx', mp)
+articles.to_pickle(OUTPUT_DIR / 'items.pkl')
 
 ################
 # transactions
 ################
 logger.info("start processing transactions")
-_add_idx_column(transactions, 'customer_id', mp_customer_id)
-_add_idx_column(transactions, 'article_id', mp_article_id)
+_add_idx_column(transactions, 'customer_id', 'user', mp_customer_id)
+_add_idx_column(transactions, 'article_id', 'item', mp_article_id)
 # (1, 2) -> (0, 1)
 transactions['sales_channel_id'] = transactions['sales_channel_id'] - 1
 transactions.to_pickle(OUTPUT_DIR / 'transactions_train.pkl')
@@ -109,7 +109,7 @@ transactions.to_pickle(OUTPUT_DIR / 'transactions_train.pkl')
 # sample_submission
 ################
 logger.info("start processing sample_submission")
-_add_idx_column(sample_submission, 'customer_id', mp_customer_id)
+_add_idx_column(sample_submission, 'customer_id', 'user', mp_customer_id)
 sample_submission.to_pickle(OUTPUT_DIR / 'sample_submission.pkl')
 
 
