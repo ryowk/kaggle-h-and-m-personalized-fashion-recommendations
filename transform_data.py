@@ -3,6 +3,8 @@
 - None, 1のみのカテゴリを0, 1に変換する(カラムは上書きされる)
 - 1, 2のみのカテゴリを0, 1に変換する(カラムは上書きされる)
 """
+from __future__ import annotations
+
 import shutil
 from pathlib import Path
 from typing import Any
@@ -103,6 +105,7 @@ _add_idx_column(transactions, 'customer_id', 'user', mp_customer_id)
 _add_idx_column(transactions, 'article_id', 'item', mp_article_id)
 # (1, 2) -> (0, 1)
 transactions['sales_channel_id'] = transactions['sales_channel_id'] - 1
+transactions['timestamp'] = transactions['t_dat'].apply(pd.Timestamp.timestamp)
 transactions.to_pickle(OUTPUT_DIR / 'transactions_train.pkl')
 
 ################
