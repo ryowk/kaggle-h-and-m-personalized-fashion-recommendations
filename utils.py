@@ -41,8 +41,8 @@ def train_valid_split(transactions: pd.DataFrame, valid_start_date: datetime.dat
     return transactions_train, transactions_valid
 
 
-def plot_images(idxs: list[int]):
-    paths = [f'./input/transformed/images/{idx}.jpg' for idx in idxs]
+def plot_images(dataset: str, idxs: list[int]):
+    paths = [f'./input/{dataset}/images/{idx}.jpg' for idx in idxs]
     columns = 12
     n = len(idxs)
     rows = (n + columns - 1) // columns
@@ -51,7 +51,7 @@ def plot_images(idxs: list[int]):
         try:
             img = Image.open(path)
         except FileNotFoundError:
-            img = Image.open('./input/transformed/images/notfound.png')
+            img = Image.open('./input/notfound.png')
         img = img.resize((256, 256))
         plt.subplot(rows, columns, i + 1)
 
