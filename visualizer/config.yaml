@@ -1,0 +1,9 @@
+common:
+  data_dir: ../input/h-and-m-personalized-fashion-recommendations/
+  image_dir: ../input/h-and-m-personalized-fashion-recommendations/images/
+  dataset: 100
+
+customers:
+  min_purchased_count: 20  # Minimum purchases count for random customer selection
+  num_sample: 10  # Number of image to show
+  max_display_per_col: 5  # Maximum number of image to display per column
