@@ -121,7 +121,9 @@ for sample_repr, sample in [("01", 0.001), ("1", 0.01), ("10", 0.1), ("100", 1)]
     _add_idx_column(transactions, 'article_id', 'item', mp_article_id)
     # (1, 2) -> (0, 1)
     transactions['sales_channel_id'] = transactions['sales_channel_id'] - 1
-    transactions['week'] = (transactions['t_dat'].max() - transactions['t_dat']).dt.days // 7 + 1  # 予測対象は0
+    # transactions_trainに含まれる最後の1週間を0として、過去に行くに連れてインクリメント
+    transactions['week'] = (transactions['t_dat'].max() - transactions['t_dat']).dt.days // 7
+    transactions['day'] = (transactions['t_dat'].max() - transactions['t_dat']).dt.days
     transactions.to_pickle(output_dir / 'transactions_train.pkl')
 
     ################
