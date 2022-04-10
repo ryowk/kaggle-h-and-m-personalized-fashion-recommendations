@@ -6,10 +6,8 @@ notebook_path=$1
 message=$2
 echo $notebook_path
 
-jupyter nbconvert --to python $notebook_path
-python_path=${notebook_path%.*}.py
+output_notebook_path=${notebook_path%.*}.out.ipynb
 
-echo start running $python_path
-python $python_path
+papermill --log-output $notebook_path $output_notebook_path
 
 kaggle competitions submit -c h-and-m-personalized-fashion-recommendations -f submission.csv -m "$message"
