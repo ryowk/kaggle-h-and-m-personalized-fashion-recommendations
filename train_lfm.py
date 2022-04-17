@@ -7,8 +7,8 @@ import pandas as pd
 from lightfm import LightFM
 from scipy import sparse
 
-ARTIFACTS_DIR = Path('artifacts')
-ARTIFACTS_DIR.mkdir(exist_ok=True)
+SAVE_DIR = Path('artifacts/lfm')
+SAVE_DIR.mkdir(exist_ok=True, parents=True)
 
 LIGHTFM_PARAMS = {
     'learning_schedule': 'adadelta',
@@ -21,7 +21,7 @@ EPOCHS = 100
 
 class Command:
     def i_i(self, dataset: str, week: int, dim: int):
-        path_prefix = ARTIFACTS_DIR / f"lfm_i_i_dataset{dataset}_week{week}_dim{dim}"
+        path_prefix = SAVE_DIR / f"lfm_i_i_dataset{dataset}_week{week}_dim{dim}"
         print(path_prefix)
         transactions = pd.read_pickle(f"input/{dataset}/transactions_train.pkl")
         users = pd.read_pickle(f"input/{dataset}/users.pkl")
@@ -42,7 +42,7 @@ class Command:
             pickle.dump(model, f)
 
     def if_i(self, dataset: str, week: int, dim: int):
-        path_prefix = ARTIFACTS_DIR / f"lfm_if_i_dataset{dataset}_week{week}_dim{dim}"
+        path_prefix = SAVE_DIR / f"lfm_if_i_dataset{dataset}_week{week}_dim{dim}"
         print(path_prefix)
         transactions = pd.read_pickle(f"input/{dataset}/transactions_train.pkl")
         users = pd.read_pickle(f"input/{dataset}/users.pkl")
@@ -71,7 +71,7 @@ class Command:
             pickle.dump(model, f)
 
     def if_f(self, dataset: str, week: int, dim: int):
-        path_prefix = ARTIFACTS_DIR / f"lfm_if_f_dataset{dataset}_week{week}_dim{dim}"
+        path_prefix = SAVE_DIR / f"lfm_if_f_dataset{dataset}_week{week}_dim{dim}"
         print(path_prefix)
         transactions = pd.read_pickle(f"input/{dataset}/transactions_train.pkl")
         users = pd.read_pickle(f"input/{dataset}/users.pkl")
@@ -114,7 +114,7 @@ class Command:
             pickle.dump(model, f)
 
     def if_if(self, dataset: str, week: int, dim: int):
-        path_prefix = ARTIFACTS_DIR / f"lfm_if_if_dataset{dataset}_week{week}_dim{dim}"
+        path_prefix = SAVE_DIR / f"lfm_if_if_dataset{dataset}_week{week}_dim{dim}"
         print(path_prefix)
         transactions = pd.read_pickle(f"input/{dataset}/transactions_train.pkl")
         users = pd.read_pickle(f"input/{dataset}/users.pkl")

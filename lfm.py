@@ -5,11 +5,11 @@ import numpy as np
 import pandas as pd
 from scipy import sparse
 
-ARTIFACTS_DIR = Path('artifacts')
+DIR = Path('artifacts/lfm')
 
 
 def _load_resources(model_type: str, dataset: str, week: int, dim: int):
-    path_prefix = ARTIFACTS_DIR / f"lfm_{model_type}_dataset{dataset}_week{week}_dim{dim}"
+    path_prefix = DIR / f"lfm_{model_type}_dataset{dataset}_week{week}_dim{dim}"
     model_path = f"{path_prefix}_model.pkl"
     user_features_path = f"{path_prefix}_user_features.npz"
     item_features_path = f"{path_prefix}_item_features.npz"
