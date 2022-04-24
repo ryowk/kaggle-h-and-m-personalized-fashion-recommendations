@@ -50,7 +50,7 @@ for sample_repr, sample in [("01", 0.001), ("1", 0.01), ("10", 0.1), ("100", 1)]
         transactions = transactions_original.copy()
     else:
         # https://www.kaggle.com/code/paweljankiewicz/hm-create-dataset-samples
-        customers = customers_original.sample(int(customers_original.shape[0] * sample), replace=False).reset_index(drop=True)
+        customers = customers_original.sample(int(customers_original.shape[0] * sample), replace=False, random_state=42).reset_index(drop=True)
         customers_sample_ids = set(customers["customer_id"])
         transactions = transactions_original[transactions_original["customer_id"].isin(
             customers_sample_ids)].reset_index(drop=True)
