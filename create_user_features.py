@@ -33,6 +33,6 @@ def create_user_ohe_agg(dataset, week):
 
 
 if __name__ == '__main__':
-    for dataset in ['1', '10', '100']:
-        for week in range(6):
+    for dataset in ['1', '100']:
+        for week in range(8):
             create_user_ohe_agg(dataset, week)
