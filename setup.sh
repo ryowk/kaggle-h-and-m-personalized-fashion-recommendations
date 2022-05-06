@@ -1,4 +1,4 @@
-pip install lightfm faiss-cpu fire vaex kaggle logzero
+pip install numpy pandas matplotlib lightfm lightgbm catboost faiss-cpu fire vaex kaggle logzero tqdm papermill
 
-mkdir -p /root/.kaggle
-cp kaggle.json /root/.kaggle/
+mkdir -p $HOME/.kaggle
+cp kaggle.json $HOME/.kaggle/
