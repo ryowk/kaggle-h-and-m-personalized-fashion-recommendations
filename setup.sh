@@ -1,4 +1,4 @@
-pip install lightfm faiss-cpu fire vaex kaggle logzero
+pip install lightfm faiss-cpu fire vaex kaggle logzero papermill
 
-mkdir -p /root/.kaggle
-cp kaggle.json /root/.kaggle/
+mkdir -p $HOME/.kaggle
+cp kaggle.json $HOME/.kaggle/
