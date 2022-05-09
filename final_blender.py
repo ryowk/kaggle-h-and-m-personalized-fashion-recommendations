@@ -26,10 +26,15 @@ if __name__ == '__main__':
     sub = sub.merge(sub_loc8w.rename(columns={'prediction': 'loc8w'}))
     sub = sub.merge(sub_pub8w.rename(columns={'prediction': 'pub8w'}))
     sub = sub.merge(sub_pub12w.rename(columns={'prediction': 'pub12w'}))
+    for c in ['loc6w', 'loc8w', 'pub8w', 'pub12w']:
+        sub[c] = sub[c].apply(lambda x: x.split(' '))
 
     predictions = []
     for _, row in tqdm(sub.iterrows()):
         items = [row['loc6w'], row['loc8w'], row['pub12w'], row['pub8w']]
         predictions.append(blend(items))
     sub['prediction'] = predictions
-    sub[['customer_id', 'prediction']].to_csv("final.csv", index=False)
+
+    sub = sub[['customer_id', 'prediction']].reset_index(drop=True)
+    sub['prediction'] = sub['prediction'].apply(lambda x: ' '.join(x))
+    sub.to_csv("final.csv", index=False)
