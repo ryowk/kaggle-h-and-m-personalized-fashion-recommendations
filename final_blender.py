@@ -20,7 +20,7 @@ if __name__ == '__main__':
     sub_loc6w = pd.read_csv('submissions/local6.csv')
     sub_loc8w = pd.read_csv('submissions/local8.csv')
     sub_pub8w = pd.read_csv('submissions/public8.csv')
-    sub_pub12w = pd.read_csv('submissions/public12w.csv')
+    sub_pub12w = pd.read_csv('submissions/public12.csv')
 
     sub = sub_loc6w.copy().rename(columns={'prediction': 'loc6w'})
     sub = sub.merge(sub_loc8w.rename(columns={'prediction': 'loc8w'}))
@@ -32,4 +32,4 @@ if __name__ == '__main__':
         items = [row['loc6w'], row['loc8w'], row['pub12w'], row['pub8w']]
         predictions.append(blend(items))
     sub['prediction'] = predictions
-    sub.to_csv("final.csv", index=False)
+    sub[['customer_id', 'prediction']].to_csv("final.csv", index=False)
