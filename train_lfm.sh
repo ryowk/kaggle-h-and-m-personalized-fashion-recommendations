@@ -4,7 +4,7 @@ set -eu -o pipefail
 
 
 for dataset in 1 100; do
-    for week in 1 2 3 4 5 6 7; do
+    for week in 1 2 3 4 5 6 7 8 9 10 11 12 13; do
         for dim in 16; do
             for model_type in i_i; do
                 # path=artifacts/lfm/lfm_${model_type}_dataset${dataset}_week${week}_dim${dim}_model.pkl
