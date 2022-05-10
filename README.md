@@ -9,6 +9,9 @@ kaggle competitions download -c h-and-m-personalized-fashion-recommendations
 unzip h-and-m-personalized-fashion-recommendations.zip -d input/h-and-m-personalized-fashion-recommendations
 ```
 
+### requirements
+see `setup.sh`
+
 ### precalculation
 ```console
 ./prepare.sh
